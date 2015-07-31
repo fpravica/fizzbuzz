@@ -120,10 +120,10 @@ public class FizzBuzzTest extends TestCase{
 
         // when
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        //OutputStream baos = System.out;
         fizzBuzz.run(baos);
         baos.close();
         String result = baos.toString(StandardCharsets.UTF_8.name());
-        System.out.println(result);
 
         // then
         String[] arr = result.split("\\" + fizzBuzz.getDelimiter());
