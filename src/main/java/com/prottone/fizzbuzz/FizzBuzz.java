@@ -1,14 +1,28 @@
 package com.prottone.fizzbuzz;
 
+import java.io.IOException;
+import java.io.OutputStream;
+import java.nio.charset.StandardCharsets;
+
 /**
  * Created by Filip on 28.7.2015..
  */
 public class FizzBuzz {
-    private Buzzer[] buzzers = new Buzzer[]{};
     private int count;
+    private Buzzer[] buzzers;
+    private String delimiter = NEW_LINE;
+    public static final String NEW_LINE = "\r\n";
+    public static final String PIPE = "|";
+
 
     public FizzBuzz(int count, Buzzer... buzzers){
         this.count = count;
+        this.buzzers = buzzers;
+    }
+
+    public FizzBuzz(int count, String delimiter, Buzzer... buzzers){
+        this.count = count;
+        this.delimiter = delimiter;
         this.buzzers = buzzers;
     }
 
@@ -26,27 +40,22 @@ public class FizzBuzz {
         return output;
     }
 
-    public void run(){
+    public void run(OutputStream os) throws IOException {
+        String separator = delimiter;
         for (int i = 1; i <= count; i++) {
-            System.out.println(getOutput(i));
+            if (isLastElement(i, count)){
+                separator = "";
+            }
+            os.write((getOutput(i) + separator).getBytes(StandardCharsets.UTF_8));
         }
     }
 
-
-    public static void main(String[] args){
-
-        FizzBuzz[] fizzBuzzs = new FizzBuzz[]{
-                new FizzBuzz(15, Buzzers.FIZZ),
-                new FizzBuzz(15, Buzzers.FIZZ, Buzzers.BUZZ),
-                new FizzBuzz(15, Buzzers.FIZZ, Buzzers.WOOF),
-                new FizzBuzz(55, Buzzers.FOO),
-                new FizzBuzz(105, Buzzers.FIZZ, Buzzers.BUZZ, Buzzers.WOOF, Buzzers.FOO)
-        };
-
-        for(FizzBuzz fizzBuzz : fizzBuzzs) {
-            System.out.println("===========");
-            fizzBuzz.run();
-        }
-
+    private boolean isLastElement(int index, int length){
+        return index == length;
     }
+
+    public String getDelimiter(){
+        return delimiter;
+    }
+
 }

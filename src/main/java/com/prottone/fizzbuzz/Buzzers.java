@@ -37,7 +37,8 @@ public class Buzzers {
      */
     public static final Buzzer FOO = new Buzzer() {
         public String execute(int index) {
-            return (index % 11 == 0) ? "Foo" : "";
+            String sameDigits = "^([0-9])\\1*$";
+            return (String.valueOf(index).matches(sameDigits) && index > 10) ? "Foo" : "";
         }
     };
 
