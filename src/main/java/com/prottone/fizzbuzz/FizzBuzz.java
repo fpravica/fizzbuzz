@@ -4,57 +4,52 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.nio.charset.StandardCharsets;
 
-/**
- * Created by Filip on 28.7.2015..
- */
-public class FizzBuzz {
+
+public final class FizzBuzz {
+    public static final String NEW_LINE = "\r\n";
+    public static final String PIPE = "|";
     private int count;
     private Buzzer[] buzzers;
     private String delimiter = NEW_LINE;
-    public static final String NEW_LINE = "\r\n";
-    public static final String PIPE = "|";
 
 
-    public FizzBuzz(int count, Buzzer... buzzers){
+    public FizzBuzz(final int count, final Buzzer... buzzers) {
         this.count = count;
         this.buzzers = buzzers;
     }
 
-    public FizzBuzz(int count, String delimiter, Buzzer... buzzers){
+    public FizzBuzz(final int count, final String delimiter, final Buzzer... buzzers) {
         this.count = count;
         this.delimiter = delimiter;
         this.buzzers = buzzers;
     }
 
-    private String getOutput(int i){
+    private String getOutput(final int i) {
         String output = "";
 
-        for(Buzzer buzzer : buzzers){
+        for (Buzzer buzzer : buzzers) {
             output += buzzer.execute(i);
         }
 
-        if (output.length() == 0){
+        if (output.length() == 0) {
             output += i;
         }
 
         return output;
     }
 
-    public void run(OutputStream os) throws IOException {
+    public void run(final OutputStream os) throws IOException {
         String separator = delimiter;
         for (int i = 1; i <= count; i++) {
-            if (isLastElement(i, count)){
+            if (i == count) {
+                // clear separator in the last iteration
                 separator = "";
             }
             os.write((getOutput(i) + separator).getBytes(StandardCharsets.UTF_8));
         }
     }
 
-    private boolean isLastElement(int index, int length){
-        return index == length;
-    }
-
-    public String getDelimiter(){
+    public String getDelimiter() {
         return delimiter;
     }
 
