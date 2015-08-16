@@ -90,13 +90,13 @@ public enum BuzzersAll implements Buzzer {
                 result *= number % TENS; // add last digit to the res
                 number /= TENS; // cut last digit
             }
-            return ((result >0) && (result % 8 == 0)) ? toString() : "";
+            return ((result > 0) && (result % 8 == 0)) ? toString() : "";
         }
     };
 
 
     private static final int TENS = 10;
-    public String toString(){
+    public String toString() {
         return name().substring(0, 1).toUpperCase() + name().substring(1).toLowerCase();
     }
 }

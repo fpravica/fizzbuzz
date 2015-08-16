@@ -17,7 +17,7 @@ public final class Buzzers {
             return (index % 3 == 0) ? OUT : "";
         }
         @Override
-        public String toString(){
+        public String toString() {
             return OUT;
         }
     };

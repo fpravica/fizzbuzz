@@ -13,22 +13,21 @@ public class FizzBuzzBuilder {
         this.length = length;
     }
 
-    public static FizzBuzzBuilder getNew(int length){
+    public static FizzBuzzBuilder getNew(int length) {
         return new FizzBuzzBuilder(length);
     }
 
-    public FizzBuzzBuilder withBuzzer(final Buzzer buzzer){
+    public FizzBuzzBuilder withBuzzer(final Buzzer buzzer) {
         buzzers.add(buzzer);
         return this;
     }
 
-    public FizzBuzzBuilder withDelimiter(final String delimiter){
+    public FizzBuzzBuilder withDelimiter(final String delimiter) {
         this.delimiter = delimiter;
         return this;
     }
 
-
-    public FizzBuzz build(){
+    public FizzBuzz build() {
         return new FizzBuzz(length, delimiter, buzzers.toArray(new Buzzer[buzzers.size()]));
     }
 }

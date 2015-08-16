@@ -1,14 +1,7 @@
 package com.prottone.fizzbuzz;
 
-import junit.framework.TestCase;
-import org.junit.Assert;
-
 import java.util.Arrays;
-import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
-
-import static com.prottone.fizzbuzz.BuzzersExtra.BAR;
 
 
 public class BuzzersTest extends BuzzersTestBase{
