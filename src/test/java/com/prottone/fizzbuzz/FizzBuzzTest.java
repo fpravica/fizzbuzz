@@ -36,7 +36,7 @@ public class FizzBuzzTest extends TestCase{
         String[] arr = result.split("\\" + fizzBuzz.getDelimiter());
         printResult(arr, fizzBuzz.getDelimiter());
 
-        Assert.assertEquals(BAR.toString(), arr[0]);
+        Assert.assertEquals("1", arr[0]);
         Assert.assertEquals(BAR.toString(), arr[1]);
         Assert.assertEquals("Fizz", arr[2]);
         Assert.assertEquals("Buzz", arr[4]);
@@ -168,7 +168,7 @@ public class FizzBuzzTest extends TestCase{
         String[] arr = result.split("\\" + fizzBuzz.getDelimiter());
         printResult(arr, fizzBuzz.getDelimiter());
 
-        Assert.assertEquals(BAR.toString(), arr[0]);
+        Assert.assertEquals("1", arr[0]);
         Assert.assertEquals(BAR.toString(), arr[1]);
         Assert.assertEquals(FIZZ.toString(), arr[2]);
         Assert.assertEquals(FIZZ.toString(), arr[5]);
@@ -199,7 +199,7 @@ public class FizzBuzzTest extends TestCase{
         String[] arr = result.split("\\" + fizzBuzz.getDelimiter());
         printResult(arr, fizzBuzz.getDelimiter());
 
-        Assert.assertEquals(BAR.toString(), arr[0]);
+        Assert.assertEquals("1", arr[0]);
         Assert.assertEquals(BAR.toString(), arr[1]);
         Assert.assertEquals(FIZZ.toString(), arr[2]);
         Assert.assertEquals(BAR.toString(), arr[3]);
