@@ -1,7 +1,13 @@
-package com.prottone.fizzbuzz;
+package com.prottone.fizzbuzz.custom;
+
+import com.prottone.fizzbuzz.Buzzer;
+import com.prottone.fizzbuzz.Buzzers;
+import com.prottone.fizzbuzz.extras.BuzzersExtra;
+import com.prottone.fizzbuzz.util.SimpleUtils;
 
 /**
  * Wrapper Class that contains all the available Buzzer implementations
+ * from "original" Buzzers class and extras package
  */
 public enum BuzzersAll implements Buzzer {
 
@@ -87,7 +93,7 @@ public enum BuzzersAll implements Buzzer {
             int result = 1;
             int number = index;
             while (number != 0) {
-                result *= number % TENS; // add last digit to the res
+                result *= number % TENS; // add last digit to the result
                 number /= TENS; // cut last digit
             }
             return ((result > 0) && (result % 8 == 0)) ? toString() : "";
@@ -97,6 +103,6 @@ public enum BuzzersAll implements Buzzer {
 
     private static final int TENS = 10;
     public String toString() {
-        return name().substring(0, 1).toUpperCase() + name().substring(1).toLowerCase();
+        return SimpleUtils.capitalize(name());
     }
 }

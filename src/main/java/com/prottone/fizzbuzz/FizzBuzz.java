@@ -2,21 +2,26 @@ package com.prottone.fizzbuzz;
 
 import java.io.IOException;
 import java.io.OutputStream;
+import java.io.StringWriter;
+import java.io.Writer;
 import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 
-public final class FizzBuzz {
+public final class FizzBuzz implements Runnable {
+
     public static final String NEW_LINE = "\r\n";
     public static final String PIPE = "|";
+
     private int count;
     private Buzzer[] buzzers;
-    private String delimiter = NEW_LINE;
+    private String delimiter;
+    private Writer writer;
 
 
     public FizzBuzz(final int count, final Buzzer... buzzers) {
         this.count = count;
+        this.delimiter = NEW_LINE;
         this.buzzers = buzzers;
     }
 
@@ -24,6 +29,13 @@ public final class FizzBuzz {
         this.count = count;
         this.delimiter = delimiter;
         this.buzzers = buzzers;
+    }
+
+    public FizzBuzz(final FizzBuzz.Builder builder) {
+        this.count = builder.count;
+        this.delimiter = builder.delimiter;
+        this.buzzers = builder.buzzers.toArray(new Buzzer[builder.buzzers.size()]);
+        this.writer = builder.writer;
     }
 
     private String getOutput(final int i) {
@@ -40,39 +52,63 @@ public final class FizzBuzz {
         return output;
     }
 
-    public void run(final OutputStream os) throws IOException {
+    public String getDelimiter() {
+        return delimiter;
+    }
+
+    public Writer getWriter() {
+        return writer;
+    }
+
+    public void run() {
         String separator = delimiter;
-        for (int i = 1; i <= count; i++) {
-            if (i == count) {
-                // clear separator in the last iteration
-                separator = "";
+
+        if (writer == null) {
+            writer = defaultWriter();
+        }
+
+        try {
+            for (int i = 1; i <= count; i++) {
+                if (i == count) {
+                    // remove separator in the last iteration
+                    separator = "";
+                }
+
+                    writer.write((getOutput(i) + separator));
+
             }
-            os.write((getOutput(i) + separator).getBytes(StandardCharsets.UTF_8));
+            writer.flush();
+            writer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
-    public String getDelimiter() {
-        return delimiter;
+    private static Writer defaultWriter() {
+        return new StringWriter();
     }
 
     /**
      * Example of the nested builder class
      */
     public static final class Builder{
-        private int length = 0;
+        private int count = 1;
         private String delimiter = FizzBuzz.NEW_LINE;
-        private List<Buzzer> buzzers = new ArrayList<Buzzer>();
+        private Set<Buzzer> buzzers = new LinkedHashSet<Buzzer>();
+        private Writer writer;
 
-        private Builder(final int length) {
-            this.length = length;
+        private Builder(final int count) {
+            if (count > 1) {
+                this.count = count;
+            }
         }
 
-        public static Builder getNew(final int length) {
-            return new Builder(length);
+        public static Builder newInstance(final int count) {
+            return new Builder(count);
         }
 
-        public Builder withBuzzer(final Buzzer buzzer) {
-            buzzers.add(buzzer);
+        public Builder withBuzzers(final Buzzer... buzzers) {
+            this.buzzers.addAll(Arrays.asList(buzzers));
             return this;
         }
 
@@ -81,8 +117,16 @@ public final class FizzBuzz {
             return this;
         }
 
+        public Builder withWriter(Writer writer) {
+            this.writer = writer;
+            return this;
+        }
+
         public FizzBuzz build() {
-            return new FizzBuzz(length, delimiter, buzzers.toArray(new Buzzer[buzzers.size()]));
+            if (writer == null) {
+                writer = defaultWriter();
+            }
+            return new FizzBuzz(this);
         }
     }
 

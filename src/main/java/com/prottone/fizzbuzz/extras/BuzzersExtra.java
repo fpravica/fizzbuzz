@@ -1,5 +1,8 @@
-package com.prottone.fizzbuzz;
+package com.prottone.fizzbuzz.extras;
 
+
+import com.prottone.fizzbuzz.Buzzer;
+import com.prottone.fizzbuzz.util.SimpleUtils;
 
 public enum BuzzersExtra implements Buzzer {
 
@@ -36,7 +39,7 @@ public enum BuzzersExtra implements Buzzer {
     };
 
     public String toString() {
-        return name().substring(0, 1) + name().substring(1).toLowerCase();
+        return SimpleUtils.capitalize(name());
     }
 
 }

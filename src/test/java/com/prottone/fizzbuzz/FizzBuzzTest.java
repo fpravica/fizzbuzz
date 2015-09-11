@@ -1,13 +1,17 @@
 package com.prottone.fizzbuzz;
 
+import com.prottone.fizzbuzz.custom.BuzzersAll;
+import com.prottone.fizzbuzz.extras.BuzzersExtra;
 import junit.framework.TestCase;
 import org.junit.Assert;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.nio.charset.StandardCharsets;
 
-import static com.prottone.fizzbuzz.BuzzersAll.*;
+import static com.prottone.fizzbuzz.custom.BuzzersAll.*;
 
 
 public class FizzBuzzTest extends TestCase{
@@ -19,15 +23,14 @@ public class FizzBuzzTest extends TestCase{
     }
 
     private String runFizzBuzz(FizzBuzz fizzBuzz) throws IOException {
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        fizzBuzz.run(baos);
-        baos.close();
-        return baos.toString(StandardCharsets.UTF_8.name());
+        fizzBuzz.run();
+        return fizzBuzz.getWriter().toString();
     }
 
     public void testFIZZ_BUZZ_WOOF_FOO_BAR() throws IOException {
         // given
-        FizzBuzz fizzBuzz = new FizzBuzz(112, BuzzersAll.FIZZ, BuzzersAll.BUZZ, BuzzersAll.WOOF, BuzzersAll.FOO, BuzzersAll.BAR);
+        int maxIndex = 112;
+        FizzBuzz fizzBuzz = new FizzBuzz(maxIndex, BuzzersAll.FIZZ, BuzzersAll.BUZZ, BuzzersAll.WOOF, BuzzersAll.FOO, BuzzersAll.BAR);
 
         // when
         String result = runFizzBuzz(fizzBuzz);
@@ -54,7 +57,8 @@ public class FizzBuzzTest extends TestCase{
 
     public void testFizz() throws IOException {
         // given
-        FizzBuzz fizzBuzz = new FizzBuzz(15, BuzzersAll.FIZZ);
+        int maxIndex = 15;
+        FizzBuzz fizzBuzz = new FizzBuzz(maxIndex, BuzzersAll.FIZZ);
 
         // when
         String result = runFizzBuzz(fizzBuzz);
@@ -72,7 +76,8 @@ public class FizzBuzzTest extends TestCase{
 
     public void testFizzBuzz() throws IOException {
         // given
-        FizzBuzz fizzBuzz = new FizzBuzz(15, BuzzersAll.FIZZ, BuzzersAll.BUZZ);
+        int maxIndex = 15;
+        FizzBuzz fizzBuzz = new FizzBuzz(maxIndex, BuzzersAll.FIZZ, BuzzersAll.BUZZ);
 
         // when
         String result = runFizzBuzz(fizzBuzz);
@@ -92,7 +97,8 @@ public class FizzBuzzTest extends TestCase{
 
     public void testBuzzFizz() throws IOException {
         // given
-        FizzBuzz fizzBuzz = new FizzBuzz(15, BuzzersAll.BUZZ, BuzzersAll.FIZZ);
+        int maxIndex = 15;
+        FizzBuzz fizzBuzz = new FizzBuzz(maxIndex, BuzzersAll.BUZZ, BuzzersAll.FIZZ);
 
         // when
         String result = runFizzBuzz(fizzBuzz);
@@ -112,7 +118,8 @@ public class FizzBuzzTest extends TestCase{
 
     public void testFoo() throws IOException {
         // given
-        FizzBuzz fizzBuzz = new FizzBuzz(222, Buzzers.FOO);
+        int maxIndex = 222;
+        FizzBuzz fizzBuzz = new FizzBuzz(maxIndex, BuzzersAll.FOO);
 
         // when
         String result = runFizzBuzz(fizzBuzz);
@@ -140,7 +147,8 @@ public class FizzBuzzTest extends TestCase{
 
     public void testBar() throws IOException {
         // given
-        FizzBuzz fizzBuzz = new FizzBuzz(256, BuzzersExtra.BAR);
+        int maxIndex = 256;
+        FizzBuzz fizzBuzz = new FizzBuzz(maxIndex, BuzzersExtra.BAR);
 
         // when
         String result = runFizzBuzz(fizzBuzz);
@@ -185,11 +193,8 @@ public class FizzBuzzTest extends TestCase{
         String delimiter = ",";
         int maxLength = 256;
 
-        FizzBuzz fizzBuzz = FizzBuzz.Builder.init(maxLength)//.getNew(maxLength)
-                .withBuzzer(FOO)
-                .withBuzzer(BAR)
-                .withBuzzer(FIZZ)
-                .withBuzzer(BUZZ)
+        FizzBuzz fizzBuzz = FizzBuzz.Builder.newInstance(maxLength)
+                .withBuzzers(FOO, BAR, FIZZ, BUZZ)
                 .withDelimiter(delimiter)
                 .build();
 
