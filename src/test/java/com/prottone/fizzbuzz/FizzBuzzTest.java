@@ -184,7 +184,8 @@ public class FizzBuzzTest extends TestCase{
         // given
         String delimiter = ",";
         int maxLength = 256;
-        FizzBuzz fizzBuzz = FizzBuzzBuilder.getNew(maxLength)
+
+        FizzBuzz fizzBuzz = FizzBuzz.Builder.init(maxLength)//.getNew(maxLength)
                 .withBuzzer(FOO)
                 .withBuzzer(BAR)
                 .withBuzzer(FIZZ)
