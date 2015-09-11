@@ -73,9 +73,7 @@ public final class FizzBuzz implements Runnable {
                     // remove separator in the last iteration
                     separator = "";
                 }
-
-                    writer.write((getOutput(i) + separator));
-
+                writer.write((getOutput(i) + separator));
             }
             writer.flush();
             writer.close();
@@ -91,7 +89,7 @@ public final class FizzBuzz implements Runnable {
     /**
      * Example of the nested builder class
      */
-    public static final class Builder{
+    public static final class Builder {
         private int count = 1;
         private String delimiter = FizzBuzz.NEW_LINE;
         private Set<Buzzer> buzzers = new LinkedHashSet<Buzzer>();
