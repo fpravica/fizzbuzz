@@ -23,12 +23,14 @@ public final class FizzBuzz implements Runnable {
         this.count = count;
         this.delimiter = NEW_LINE;
         this.buzzers = buzzers;
+        this.writer = defaultWriter();
     }
 
     public FizzBuzz(final int count, final String delimiter, final Buzzer... buzzers) {
         this.count = count;
         this.delimiter = delimiter;
         this.buzzers = buzzers;
+        this.writer = defaultWriter();
     }
 
     public FizzBuzz(final FizzBuzz.Builder builder) {
@@ -60,23 +62,23 @@ public final class FizzBuzz implements Runnable {
         return writer;
     }
 
+    private void closeWriter() throws IOException {
+        writer.flush();
+        writer.close();
+    }
+
     public void run() {
         String separator = delimiter;
-
-        if (writer == null) {
-            writer = defaultWriter();
-        }
 
         try {
             for (int i = 1; i <= count; i++) {
                 if (i == count) {
-                    // remove separator in the last iteration
+                    // remove last iteration separator
                     separator = "";
                 }
                 writer.write((getOutput(i) + separator));
             }
-            writer.flush();
-            writer.close();
+            closeWriter();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -92,13 +94,14 @@ public final class FizzBuzz implements Runnable {
     public static final class Builder {
         private int count = 1;
         private String delimiter = FizzBuzz.NEW_LINE;
-        private Set<Buzzer> buzzers = new LinkedHashSet<Buzzer>();
+        private Set<Buzzer> buzzers;
         private Writer writer;
 
         private Builder(final int count) {
             if (count > 1) {
                 this.count = count;
             }
+            buzzers = new LinkedHashSet<Buzzer>();
         }
 
         public static Builder newInstance(final int count) {

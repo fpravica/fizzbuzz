@@ -5,11 +5,7 @@ import com.prottone.fizzbuzz.extras.BuzzersExtra;
 import junit.framework.TestCase;
 import org.junit.Assert;
 
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.io.StringWriter;
-import java.nio.charset.StandardCharsets;
 
 import static com.prottone.fizzbuzz.custom.BuzzersAll.*;
 
