@@ -17,6 +17,7 @@ public enum BuzzersExtra implements Buzzer {
             return ((res % 1 == 0) && num > 1) ? toString() : "";
         }
     },
+
     /**
      * Return Waka for  number divisible by 13
      */
@@ -25,6 +26,7 @@ public enum BuzzersExtra implements Buzzer {
             return (num % 13 == 0) ? toString() : "";
         }
     },
+
     /**
      *  This is true if and only if one or both
      *  of (5*x^2 + 4) or (5*x^2 - 4) are a perfect square.
@@ -35,6 +37,26 @@ public enum BuzzersExtra implements Buzzer {
             double exp2 = Math.sqrt(5 * Math.pow(num, 2) - 4);
             boolean isFibonacci = (exp1 % 1 == 0 || exp2 % 1 == 0);
             return isFibonacci ? toString() : "";
+        }
+    },
+
+    /**
+     *  Returns "Foo" for 11, 22, 33, 44, 55...
+     */
+    FOO {
+        public String execute(final int index) {
+            String sameDigits = "^([0-9])\\1+$";
+            boolean isMatching = String.valueOf(index).matches(sameDigits);
+            return (isMatching) ? toString() : "";
+        }
+    },
+
+    /**
+     * Returns "Woof" if index divisible by 7
+     */
+    WOOF {
+        public String execute(final int index) {
+            return (index % 7 == 0) ? toString() : "";
         }
     };
 

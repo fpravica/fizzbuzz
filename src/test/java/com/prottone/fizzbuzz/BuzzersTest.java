@@ -32,28 +32,4 @@ public class BuzzersTest extends BuzzersTestBase{
         assertResults(buzzer, triggers);
         assertResults(buzzer, triggers2);
     }
-
-    public void testWOOF() {
-        // given
-        Buzzer buzzer = Buzzers.WOOF;
-
-        // when
-        List<Integer> triggers = Arrays.asList(7, 14, 21, 28, 35, 42, 49);
-        List<Integer> triggers2 = Arrays.asList(70, 77, 84, 91, 98, 105, 112);
-
-        // then: Print Woof for every index divisible by 7. Otherwise the empty string
-        assertResults(buzzer, triggers);
-        assertResults(buzzer, triggers2);
-    }
-
-    public void testFOO() {
-        // given
-        Buzzer buzzer = Buzzers.FOO;
-
-        // when
-        List<Integer> triggers = Arrays.asList(11, 22, 33, 44, 55, 66, 77, 88, 99, 111, 222, 333, 444, 555, 666, 777, 888, 999, 1111, 2222);
-
-        // then: Print Foo for every number with all the same digits(eg.11, 22, 33, ..., 111, 222, ...)
-        assertResults(buzzer, triggers);
-    }
 }

@@ -32,7 +32,7 @@ public enum BuzzersAll implements Buzzer {
      */
     FOO {
         public String execute(final int index) {
-            return Buzzers.FOO.execute(index);
+            return BuzzersExtra.FOO.execute(index);
         }
     },
     /**
@@ -40,7 +40,7 @@ public enum BuzzersAll implements Buzzer {
      */
     WOOF {
         public String execute(final int index) {
-            return Buzzers.WOOF.execute(index);
+            return BuzzersExtra.WOOF.execute(index);
         }
     },
     /**
@@ -100,8 +100,8 @@ public enum BuzzersAll implements Buzzer {
         }
     };
 
-
     private static final int TENS = 10;
+
     public String toString() {
         return SimpleUtils.capitalize(name());
     }

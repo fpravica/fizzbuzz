@@ -33,7 +33,7 @@ public final class FizzBuzz implements Runnable {
         this.writer = defaultWriter();
     }
 
-    public FizzBuzz(final FizzBuzz.Builder builder) {
+    private FizzBuzz(final FizzBuzz.Builder builder) {
         this.count = builder.count;
         this.delimiter = builder.delimiter;
         this.buzzers = builder.buzzers.toArray(new Buzzer[builder.buzzers.size()]);
@@ -92,16 +92,13 @@ public final class FizzBuzz implements Runnable {
      * Example of the nested builder class
      */
     public static final class Builder {
-        private int count = 1;
+        private int count;
         private String delimiter = FizzBuzz.NEW_LINE;
-        private Set<Buzzer> buzzers;
+        private Set<Buzzer> buzzers = new LinkedHashSet<Buzzer>();
         private Writer writer;
 
         private Builder(final int count) {
-            if (count > 1) {
                 this.count = count;
-            }
-            buzzers = new LinkedHashSet<Buzzer>();
         }
 
         public static Builder newInstance(final int count) {
@@ -124,10 +121,18 @@ public final class FizzBuzz implements Runnable {
         }
 
         public FizzBuzz build() {
+            validateAndInit();
+            return new FizzBuzz(this);
+        }
+
+        private void validateAndInit() {
             if (writer == null) {
                 writer = defaultWriter();
             }
-            return new FizzBuzz(this);
+
+            if (count < 1) {
+                throw new IllegalArgumentException("total count can not be les than 1");
+            }
         }
     }
 
