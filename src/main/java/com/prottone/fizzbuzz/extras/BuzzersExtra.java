@@ -60,8 +60,8 @@ public enum BuzzersExtra implements Buzzer {
         }
     };
 
+    @Override
     public String toString() {
         return SimpleUtils.capitalize(name());
     }
-
 }

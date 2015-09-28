@@ -14,6 +14,7 @@ public abstract class BuzzersTestBase extends TestCase {
 
         for(int num = startCount; num <= endCount; num++) {
             if (triggers.contains(num)){
+                // for this index, buzzer should return the output equals to the buzzer toString value
                 Assert.assertEquals(buzzer.toString(), buzzer.execute(num));
             } else {
                 Assert.assertEquals("", buzzer.execute(num));

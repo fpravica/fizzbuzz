@@ -12,13 +12,12 @@ public final class Buzzers {
      * Returns "Fizz" if index divisible by 3
      */
     public static final Buzzer FIZZ = new Buzzer() {
-        private static final String OUT = "Fizz";
         public String execute(final int index) {
-            return (index % 3 == 0) ? OUT : "";
+            return (index % 3 == 0) ? toString() : "";
         }
         @Override
         public String toString() {
-            return OUT;
+            return "Fizz";
         }
     };
 
@@ -26,13 +25,12 @@ public final class Buzzers {
      * Returns "Buzz" if index divisible by 5
      */
     public static final Buzzer BUZZ = new Buzzer() {
-        private static final String OUT = "Buzz";
         public String execute(final int index) {
-            return (index % 5 == 0) ? OUT : "";
+            return (index % 5 == 0) ? toString() : "";
         }
         @Override
         public String toString() {
-            return OUT;
+            return "Buzz";
         }
     };
 }

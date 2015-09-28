@@ -1,15 +1,18 @@
 package com.prottone.fizzbuzz;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.io.IOException;
-import java.io.OutputStream;
 import java.io.StringWriter;
 import java.io.Writer;
-import java.nio.charset.StandardCharsets;
-import java.util.*;
+import java.util.Arrays;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
 
 public final class FizzBuzz implements Runnable {
-
+    public static final Logger LOGGER = LoggerFactory.getLogger(FizzBuzz.class);
     public static final String NEW_LINE = "\r\n";
     public static final String PIPE = "|";
 
@@ -21,7 +24,7 @@ public final class FizzBuzz implements Runnable {
 
     public FizzBuzz(final int count, final Buzzer... buzzers) {
         this.count = count;
-        this.delimiter = NEW_LINE;
+        this.delimiter = defaultDelimiter();
         this.buzzers = buzzers;
         this.writer = defaultWriter();
     }
@@ -62,30 +65,40 @@ public final class FizzBuzz implements Runnable {
         return writer;
     }
 
-    private void closeWriter() throws IOException {
-        writer.flush();
-        writer.close();
+    private void closeWriter() {
+        try {
+            if (writer != null) {
+                writer.close();
+            }
+        } catch (IOException e) {
+            LOGGER.error("Writer '{}' flush and close failed", writer, e);
+        }
     }
 
     public void run() {
-        String separator = delimiter;
-
         try {
             for (int i = 1; i <= count; i++) {
-                if (i == count) {
-                    // remove last iteration separator
-                    separator = "";
-                }
-                writer.write((getOutput(i) + separator));
+                boolean isBeforeEnd = (i != count);
+                writer.write(getOutput(i) + applyDelimiter(isBeforeEnd));
             }
-            closeWriter();
+            writer.flush();
         } catch (IOException e) {
-            e.printStackTrace();
+            LOGGER.error("Writer '{}' write failed!", writer, e);
+        } finally {
+            closeWriter();
         }
+    }
+
+    private String applyDelimiter(boolean enable) {
+        return (enable) ? delimiter : "";
     }
 
     private static Writer defaultWriter() {
         return new StringWriter();
+    }
+
+    private static String defaultDelimiter() {
+        return FizzBuzz.NEW_LINE;
     }
 
     /**
@@ -93,7 +106,7 @@ public final class FizzBuzz implements Runnable {
      */
     public static final class Builder {
         private int count;
-        private String delimiter = FizzBuzz.NEW_LINE;
+        private String delimiter;
         private Set<Buzzer> buzzers = new LinkedHashSet<Buzzer>();
         private Writer writer;
 
@@ -126,14 +139,17 @@ public final class FizzBuzz implements Runnable {
         }
 
         private void validateAndInit() {
+            if (count < 1) {
+                throw new IllegalArgumentException("total count can not be les than 1");
+            }
+
             if (writer == null) {
                 writer = defaultWriter();
             }
 
-            if (count < 1) {
-                throw new IllegalArgumentException("total count can not be les than 1");
+            if (delimiter == null) {
+                delimiter = defaultDelimiter();
             }
         }
     }
-
 }

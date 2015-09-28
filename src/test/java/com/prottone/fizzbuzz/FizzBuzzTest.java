@@ -12,40 +12,35 @@ import static com.prottone.fizzbuzz.custom.BuzzersAll.*;
 
 public class FizzBuzzTest extends TestCase{
 
-    private void printResult(String[] arr, String delimiter){
-        for(int i = 0 ; i < arr.length; i++) {
-            System.out.print(arr[i] + delimiter);
-        }
-    }
-
-    private String runFizzBuzz(FizzBuzz fizzBuzz) throws IOException {
-        fizzBuzz.run();
-        return fizzBuzz.getWriter().toString();
+    private void printResult(String result){
+            System.out.println(result);
     }
 
     public void testFIZZ_BUZZ_WOOF_FOO_BAR() throws IOException {
         // given
         int maxIndex = 112;
-        FizzBuzz fizzBuzz = new FizzBuzz(maxIndex, BuzzersAll.FIZZ, BuzzersAll.BUZZ, BuzzersAll.WOOF, BuzzersAll.FOO, BuzzersAll.BAR);
+        FizzBuzz fizzBuzz = new FizzBuzz(maxIndex, FizzBuzz.PIPE, BuzzersAll.FIZZ, BuzzersAll.BUZZ, BuzzersAll.WOOF, BuzzersAll.FOO, BuzzersAll.BAR);
 
         // when
-        String result = runFizzBuzz(fizzBuzz);
+        fizzBuzz.run();
+        String result = fizzBuzz.getWriter().toString();
 
         // then
         String[] arr = result.split("\\" + fizzBuzz.getDelimiter());
-        printResult(arr, fizzBuzz.getDelimiter());
+        printResult(result);
+
 
         Assert.assertEquals("1", arr[0]);
-        Assert.assertEquals(BAR.toString(), arr[1]);
+        Assert.assertEquals("Bar", arr[1]);
         Assert.assertEquals("Fizz", arr[2]);
         Assert.assertEquals("Buzz", arr[4]);
         Assert.assertEquals("Woof", arr[6]);
-        Assert.assertEquals(BAR.toString(), arr[7]);
+        Assert.assertEquals("Bar", arr[7]);
         Assert.assertEquals("Buzz", arr[9]);
         Assert.assertEquals("Foo", arr[10]);
         Assert.assertEquals("FizzBuzz", arr[14]);
-        Assert.assertEquals(BAR.toString(), arr[15]);
-        Assert.assertEquals(BAR.toString(), arr[63]);
+        Assert.assertEquals("Bar", arr[15]);
+        Assert.assertEquals("Bar", arr[63]);
         Assert.assertEquals("Foo", arr[87]);
         Assert.assertEquals("FizzBuzzWoof", arr[104]);
         Assert.assertEquals("FizzFoo", arr[110]);
@@ -54,14 +49,15 @@ public class FizzBuzzTest extends TestCase{
     public void testFizz() throws IOException {
         // given
         int maxIndex = 15;
-        FizzBuzz fizzBuzz = new FizzBuzz(maxIndex, BuzzersAll.FIZZ);
+        FizzBuzz fizzBuzz = new FizzBuzz(maxIndex, FizzBuzz.PIPE, BuzzersAll.FIZZ);
 
         // when
-        String result = runFizzBuzz(fizzBuzz);
+        fizzBuzz.run();
+        String result = fizzBuzz.getWriter().toString();
 
         // then
         String[] arr = result.split("\\" + fizzBuzz.getDelimiter());
-        printResult(arr, fizzBuzz.getDelimiter());
+        printResult(result);
 
         Assert.assertEquals("Fizz", arr[2]);
         Assert.assertEquals("Fizz", arr[5]);
@@ -76,11 +72,12 @@ public class FizzBuzzTest extends TestCase{
         FizzBuzz fizzBuzz = new FizzBuzz(maxIndex, BuzzersAll.FIZZ, BuzzersAll.BUZZ);
 
         // when
-        String result = runFizzBuzz(fizzBuzz);
+        fizzBuzz.run();
+        String result = fizzBuzz.getWriter().toString();
 
         // then
         String[] arr = result.split("\\" + fizzBuzz.getDelimiter());
-        printResult(arr, fizzBuzz.getDelimiter());
+        printResult(result);
 
         Assert.assertEquals("Fizz", arr[2] );
         Assert.assertEquals("Buzz", arr[4]);
@@ -97,11 +94,12 @@ public class FizzBuzzTest extends TestCase{
         FizzBuzz fizzBuzz = new FizzBuzz(maxIndex, BuzzersAll.BUZZ, BuzzersAll.FIZZ);
 
         // when
-        String result = runFizzBuzz(fizzBuzz);
+        fizzBuzz.run();
+        String result = fizzBuzz.getWriter().toString();
 
         // then
         String[] arr = result.split("\\" + fizzBuzz.getDelimiter());
-        printResult(arr, fizzBuzz.getDelimiter());
+        printResult(result);
 
         Assert.assertEquals("Fizz", arr[2] );
         Assert.assertEquals("Buzz", arr[4]);
@@ -118,7 +116,8 @@ public class FizzBuzzTest extends TestCase{
         FizzBuzz fizzBuzz = new FizzBuzz(maxIndex, BuzzersAll.FOO);
 
         // when
-        String result = runFizzBuzz(fizzBuzz);
+        fizzBuzz.run();
+        String result = fizzBuzz.getWriter().toString();
 
         // then
         String[] arr = result.split("\\" + fizzBuzz.getDelimiter());
@@ -127,18 +126,18 @@ public class FizzBuzzTest extends TestCase{
         Assert.assertEquals("6", arr[5]);
         Assert.assertEquals("9", arr[8]);
         Assert.assertEquals("10", arr[9]);
-        Assert.assertEquals(FOO.toString(), arr[10]);
-        Assert.assertEquals(FOO.toString(), arr[21]);
-        Assert.assertEquals(FOO.toString(), arr[32]);
-        Assert.assertEquals(FOO.toString(), arr[43]);
-        Assert.assertEquals(FOO.toString(), arr[54]);
-        Assert.assertEquals(FOO.toString(), arr[65]);
-        Assert.assertEquals(FOO.toString(), arr[87]);
-        Assert.assertEquals(FOO.toString(), arr[98]);
+        Assert.assertEquals("Foo", arr[10]);
+        Assert.assertEquals("Foo", arr[21]);
+        Assert.assertEquals("Foo", arr[32]);
+        Assert.assertEquals("Foo", arr[43]);
+        Assert.assertEquals("Foo", arr[54]);
+        Assert.assertEquals("Foo", arr[65]);
+        Assert.assertEquals("Foo", arr[87]);
+        Assert.assertEquals("Foo", arr[98]);
         Assert.assertEquals("100", arr[99]);
         Assert.assertEquals("110", arr[109]);
-        Assert.assertEquals(FOO.toString(), arr[110]);
-        Assert.assertEquals(FOO.toString(), arr[221]);
+        Assert.assertEquals("Foo", arr[110]);
+        Assert.assertEquals("Foo", arr[221]);
     }
 
     public void testBar() throws IOException {
@@ -147,18 +146,19 @@ public class FizzBuzzTest extends TestCase{
         FizzBuzz fizzBuzz = new FizzBuzz(maxIndex, BuzzersExtra.BAR);
 
         // when
-        String result = runFizzBuzz(fizzBuzz);
+        fizzBuzz.run();
+        String result = fizzBuzz.getWriter().toString();
 
         // then
         String[] arr = result.split("\\" + fizzBuzz.getDelimiter());
-        //printResult(arr, fizzBuzz.getDelimiter());
+        //printResult(result);
 
-        Assert.assertEquals(BAR.toString(), arr[7]);
-        Assert.assertEquals(BAR.toString(), arr[15]);
-        Assert.assertEquals(BAR.toString(), arr[31]);
-        Assert.assertEquals(BAR.toString(), arr[63]);
-        Assert.assertEquals(BAR.toString(), arr[127]);
-        Assert.assertEquals(BAR.toString(), arr[255]);
+        Assert.assertEquals("Bar", arr[7]);
+        Assert.assertEquals("Bar", arr[15]);
+        Assert.assertEquals("Bar", arr[31]);
+        Assert.assertEquals("Bar", arr[63]);
+        Assert.assertEquals("Bar", arr[127]);
+        Assert.assertEquals("Bar", arr[255]);
     }
 
     public void testPipeWoofAndDelimiter() throws IOException {
@@ -166,22 +166,23 @@ public class FizzBuzzTest extends TestCase{
         FizzBuzz fizzBuzz = new FizzBuzz(15, FizzBuzz.PIPE, FIZZ, WOOF, BAR);
 
         // when
-        String result = runFizzBuzz(fizzBuzz);
+        fizzBuzz.run();
+        String result = fizzBuzz.getWriter().toString();
 
         // then
         String[] arr = result.split("\\" + fizzBuzz.getDelimiter());
-        printResult(arr, fizzBuzz.getDelimiter());
+        printResult(result);
 
         Assert.assertEquals("1", arr[0]);
-        Assert.assertEquals(BAR.toString(), arr[1]);
-        Assert.assertEquals(FIZZ.toString(), arr[2]);
-        Assert.assertEquals(FIZZ.toString(), arr[5]);
-        Assert.assertEquals(WOOF.toString(), arr[6]);
-        Assert.assertEquals(BAR.toString(), arr[7]);
-        Assert.assertEquals(FIZZ.toString(), arr[8]);
-        Assert.assertEquals(FIZZ.toString(), arr[11]);
-        Assert.assertEquals(WOOF.toString(), arr[13]);
-        Assert.assertEquals(FIZZ.toString(), arr[14]);
+        Assert.assertEquals("Bar", arr[1]);
+        Assert.assertEquals("Fizz", arr[2]);
+        Assert.assertEquals("Fizz", arr[5]);
+        Assert.assertEquals("Woof", arr[6]);
+        Assert.assertEquals("Bar", arr[7]);
+        Assert.assertEquals("Fizz", arr[8]);
+        Assert.assertEquals("Fizz", arr[11]);
+        Assert.assertEquals("Woof", arr[13]);
+        Assert.assertEquals("Fizz", arr[14]);
     }
 
     public void testFizzBuzzBuilder() throws IOException {
@@ -195,29 +196,31 @@ public class FizzBuzzTest extends TestCase{
                 .build();
 
         // when
-        String result = runFizzBuzz(fizzBuzz);
+        fizzBuzz.run();
+        String result = fizzBuzz.getWriter().toString();
 
         // then
         String[] arr = result.split("\\" + fizzBuzz.getDelimiter());
-        printResult(arr, fizzBuzz.getDelimiter());
+        printResult(result);
 
+        Assert.assertEquals(delimiter, fizzBuzz.getDelimiter());
         Assert.assertEquals("1", arr[0]);
-        Assert.assertEquals(BAR.toString(), arr[1]);
-        Assert.assertEquals(FIZZ.toString(), arr[2]);
-        Assert.assertEquals(BAR.toString(), arr[3]);
-        Assert.assertEquals(BUZZ.toString(), arr[4]);
-        Assert.assertEquals(FIZZ.toString(), arr[5]);
-        Assert.assertEquals(BAR.toString(), arr[7]);
-        Assert.assertEquals(FOO.toString(), arr[10]);
-        Assert.assertEquals(FIZZ.toString() + BUZZ.toString(), arr[14]);
-        Assert.assertEquals(BAR.toString(), arr[15]);
-        Assert.assertEquals(FOO.toString(), arr[21]);
-        Assert.assertEquals(BAR.toString(), arr[31]);
-        Assert.assertEquals(BAR.toString(), arr[63]);
-        Assert.assertEquals(FOO.toString( )+ FIZZ.toString(), arr[98]);
-        Assert.assertEquals(FOO.toString() + FIZZ.toString(), arr[110]);
-        Assert.assertEquals(BAR.toString(), arr[127]);
-        Assert.assertEquals(FOO.toString() + FIZZ.toString(), arr[221]);
-        Assert.assertEquals(BAR.toString(), arr[255]);
+        Assert.assertEquals("Bar", arr[1]);
+        Assert.assertEquals("Fizz", arr[2]);
+        Assert.assertEquals("Bar", arr[3]);
+        Assert.assertEquals("Buzz", arr[4]);
+        Assert.assertEquals("Fizz", arr[5]);
+        Assert.assertEquals("Bar", arr[7]);
+        Assert.assertEquals("Foo", arr[10]);
+        Assert.assertEquals("FizzBuzz", arr[14]);
+        Assert.assertEquals("Bar", arr[15]);
+        Assert.assertEquals("Foo", arr[21]);
+        Assert.assertEquals("Bar", arr[31]);
+        Assert.assertEquals("Bar", arr[63]);
+        Assert.assertEquals("FooFizz", arr[98]);
+        Assert.assertEquals("FooFizz", arr[110]);
+        Assert.assertEquals("Bar", arr[127]);
+        Assert.assertEquals("FooFizz", arr[221]);
+        Assert.assertEquals("Bar", arr[255]);
     }
 }
